@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📄 Collab Doc Editor
 
 A real-time collaborative text editor built using **Angular**, **Spring Boot**, **WebSockets**, and **Quill.js**. It features **Operational Transformation (OT)** for conflict resolution, **live cursor presence**, and **active users tracking** using **Supabase**, enabling smooth and consistent multi-user editing experiences.
@@ -48,3 +49,6 @@ npm install
 
 # Start the frontend server
 npm start
+=======
+# collab-doc-ui
+>>>>>>> c1ccb33 (Initial commit)
