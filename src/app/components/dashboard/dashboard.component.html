@@ -1,0 +1,25 @@
+<!-- <div class="dashboard">
+      <h2>Your Documents</h2>
+      <button (click)="createNewDoc()">New Document</button>
+       <ul>
+        <li *ngFor="let doc of documents" (click)="openDoc(doc.id)">{{ doc.name }}</li>
+      </ul> 
+</div>  -->
+<!-- <div class="avatar-container" *ngIf="userPhotoURL">
+  <img [src]="userPhotoURL" alt="User Avatar" class="avatar" />
+</div> -->
+<div class="top-bar">
+  <div class="greeting">
+    <h2 *ngIf="userName">Welcome, {{ userName }}!</h2>
+  </div>
+  <div class="top-right-controls">
+    <button class="logout-button" (click)="logout()">Logout</button>
+    <div class="avatar-container" [style.background]="bgColor">
+      <span>{{ initials }}</span>
+    </div>
+  </div>
+</div>
+
+
+
+<app-document-grid [documents]="documents"></app-document-grid>

@@ -1,0 +1,74 @@
+:root {
+    --primary-color: #007bff;
+    --text-color: #333;
+    --border-color: #ddd;
+    --background-color: #ffffff;
+    --secondary-bg: #f8f9fa;
+    --font-family: 'Arial', sans-serif;
+  }
+  
+  .permissions-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    background: var(--background-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-family);
+  }
+  
+  h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  p {
+    color: var(--text-color);
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  .permissions-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .permissions-list li {
+    background: var(--secondary-bg);
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .permissions-list button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  
+  .permissions-list button:hover {
+    background: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .permissions-container {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    p {
+      font-size: 14px;
+    }
+  }
+  

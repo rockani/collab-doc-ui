@@ -1,0 +1,35 @@
+<!-- <div class="editor-container">
+    <app-toolbar></app-toolbar>
+    <div class="editor" contenteditable="true"></div>
+    
+    <app-chat></app-chat>
+  </div> -->
+  
+  <div class="avatar-bar">
+
+    <div
+      class="avatar"
+      *ngFor="let user of currentlyViewingUsers; let i = index"
+      [style.zIndex]="currentlyViewingUsers.length - i"
+      [style.background]="getColor(user.userId)"
+      [title]="user.userName"
+    >
+      {{ getInitials(user.userName) }}
+    </div>
+  </div>
+  
+  <!-- <div class="presence-bar">
+    <p *ngIf="currentlyViewingUsers.length > 0">
+      Currently Viewing:
+      <span *ngFor="let user of currentlyViewingUsers; let last = last">
+        {{ user.userName }}<span *ngIf="!last">, </span>
+      </span>
+    </p>
+  </div> -->
+<div class="editor-container">
+    <input type="text" [(ngModel)]="title" placeholder="Enter document title" class="title-input" />
+
+    <quill-editor [styles]="{ direction: 'ltr', textAlign: 'left' }"  [(ngModel)]="content" (onEditorCreated)="onEditorCreated($event)"></quill-editor>
+    <button (click)="updateDocument()"  class="save-btn">Update</button>
+    <button (click)="saveDocument()" class="save-btn">Save as a new copy</button>
+</div>

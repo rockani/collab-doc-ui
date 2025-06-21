@@ -1,0 +1,53 @@
+<div class="register-wrapper">
+    <div class="register-container">  
+        <div class="register-container">
+            <button class="google-signup-btn" (click)="signInWithGoogle()">
+               Sign in with 
+              <img src="/assets/google-icon.png" alt="Google Logo" class="google-logo">
+              
+            </button>
+        </div>  
+        <!-- <h2>Sign Up</h2> -->
+        <!-- Email & Password Sign-Up Form -->
+
+        <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+            <input type="email" formControlName="email" placeholder="E-mail address" required />
+            <input type="password" formControlName="password" placeholder="Password" required />
+
+            <!-- Show Confirm Password only for Sign Up -->
+            <input *ngIf="isSignUpMode" type="password" formControlName="confirmPassword" placeholder="Confirm password" required />
+
+            <button type="submit">{{ isSignUpMode ? 'Create Account' : 'Sign In' }}</button>
+        </form>
+
+        <p (click)="toggleMode()">
+            {{ isSignUpMode ? 'Have an account? Sign In' : 'Don’t have an account? Sign Up' }}
+        </p>
+        <!-- <input type="email" [(ngModel)]="email" placeholder="E-mail address" required />
+        <input type="password" [(ngModel)]="password" placeholder="Password" required />
+        <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirm password" required /> -->
+    
+       <!-- <button (click)="signUp()">Create Account</button> -->
+        <div class="verification-container" *ngIf="loading || verified">
+            <div class="spinner" *ngIf="loading"></div>
+            <img src="/assets/checkmark-icon.png" class="checkmark" *ngIf="verified" />
+            <span>{{ message }}</span>
+        </div>
+        <!-- <p>Have an account? <a href="#">Sign In</a></p> -->
+    
+        <!-- <p class="or-text">or you can sign in with</p>  -->
+        
+          
+        <!-- <div class="oauth-buttons">
+        <button (click)="signInWithGoogle()">
+            <img src="/assets/google-icon.png" alt="Google" />
+        </button>
+        <button (click)="githubSignIn()">
+            <img src="/assets/github-icon.png" alt="GitHub" />
+        </button>
+        <button (click)="facebookSignIn()">
+            <img src="/assets/facebook-icon.png" alt="Facebook" />
+        </button>
+        </div> -->
+    </div>
+</div>  

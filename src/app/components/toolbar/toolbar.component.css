@@ -1,0 +1,21 @@
+.toolbar {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color);
+  }
+  
+  .toolbar button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  
+  .toolbar button:hover {
+    background: var(--hover-color);
+  }

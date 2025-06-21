@@ -1,0 +1,108 @@
+/* .error {
+    color: red;
+    font-size: 14px;
+  }
+  
+  input {
+    width: 90%;
+    padding: 8px;
+    margin: auto;
+    justify-content: center;
+  }
+  
+  button {
+    margin: 10px;
+    padding: 8px 12px;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  .dialog{
+    padding: 3%;
+  }
+  
+  .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(0, 0, 0, 0.2);
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .role-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0px 8px 0px;
+  }
+  
+  .role-selection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 0px;
+  }
+   */
+  
+
+
+
+  .dialog {
+    max-width: 500px;
+    margin: 0 0;
+    padding: 10px;
+  }
+  
+  .form-group,
+  .role-container {
+    width: 100%;
+    display: flex;
+
+    margin-bottom: 16px;
+  }
+  .role-container{
+    padding-top: 16px;
+  }
+  input[type="email"] {
+    width: 100%;
+    padding: 10px 8px; 
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  .role-selection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+  }
+  
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  button{
+    padding: 4px 4px;
+  }
+  option{
+    padding: 4px 4px;
+  }

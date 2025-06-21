@@ -1,0 +1,125 @@
+.avatar-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ccc;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #f8f9fa;
+    --text-color: #333;
+    --border-color: #ddd;
+    --background-color: #ffffff;
+    --hover-color: #0056b3;
+    --font-family: 'Arial', sans-serif;
+  }
+  
+  .editor-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    background: var(--background-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .editor {
+    min-height: 300px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+    background: var(--secondary-color);
+    transition: border 0.3s ease;
+  }
+  
+  .editor:focus {
+    border-color: var(--primary-color);
+  }
+  
+  .editor-container app-toolbar {
+    width: 100%;
+  }
+  
+  .editor-container app-comment-section,
+  .editor-container app-chat {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 6px;
+    background: var(--secondary-color);
+    border: 1px solid var(--border-color);
+  }
+  
+  @media (max-width: 768px) {
+    .editor-container {
+      width: 95%;
+      padding: 15px;
+    }
+  
+    .editor {
+      min-height: 200px;
+      font-size: 14px;
+    }
+  }
+  .avatar-bar {
+    position: absolute;
+    top: 10px;
+    right: 60px;
+    display: flex;
+    gap: 0;
+  }
+  
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -12px;
+    border: 2px solid white;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: transform 0.2s ease;
+    cursor: default;
+  }
+  .top-bar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logout-button {
+    padding: 6px 12px;
+    background-color: white;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #e0e0e0;
+  }
+  
