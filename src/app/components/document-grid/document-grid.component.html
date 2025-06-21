@@ -1,0 +1,50 @@
+<div class="container" >
+    <h2>Start a new document</h2>
+    <div class="templates">
+      <div class="template-card blank" (click)="createNewDoc()">
+        <div class="blank-icon">+</div>
+        <p>Blank document</p>
+      </div>
+
+      <div class="template-card">Resume<br><span>Modern Writer</span></div>
+      <div class="template-card">Resume<br><span>Coral</span></div>
+      <div class="template-card">Project proposal<br><span>Tropic</span></div>
+      <div class="template-card">Resume<br><span>Serif</span></div>
+      <div class="template-card">Resume<br><span>Spearmint</span></div>
+      <div class="template-card">Letter<br><span>Spearmint</span></div>
+    </div>
+</div>
+
+<div class="filter-container">
+    <!-- <label for="documentFilter">Filter:</label> -->
+    <select id="documentFilter" [(ngModel)]="selectedFilter" (change)="applyFilter()">
+      <option value="owned">Owned by Me</option>
+      <option value="shared">Shared with Me</option>
+    </select>
+</div>
+
+<!-- Show spinner while loading -->
+<div *ngIf="loading" class="spinner"></div>
+
+<!-- Show error message if request fails -->
+<p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>  
+<div class="document-grid">
+    <div class="document-card" *ngFor="let doc of documents" (click)="opendoc(doc)">
+        <img [src]="thumbnailMap[doc.id] || '/assets/google-icon.png'" alt="Document Thumbnail">
+        <div class="doc-info">
+        <h3>{{ doc.title }}</h3>
+        <p>Last Opened: {{ doc.lastModified }}</p>
+        </div>
+        <div *ngIf ="selectedFilter == 'owned'" class="menu-container">
+            <button class="menu-button" (click)="toggleMenu($event, doc.id)">
+                &#x22EE; <!-- Unicode for three dots (⋮) -->
+            </button>
+            <ul class="menu-options" *ngIf="menuOpenMap[doc.id]">
+                <li (click)="openShareDialog(doc.id, $event)">Share</li>
+            </ul>
+        </div>
+    </div>
+</div>
+  
+<p *ngIf="loading">Loading more documents...</p>
+<p *ngIf="allLoaded">No more documents to load.</p>

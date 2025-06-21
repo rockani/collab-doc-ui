@@ -1,0 +1,110 @@
+.dashboard {
+    width: 80%;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+  }
+  
+  .dashboard h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .dashboard button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .dashboard button:hover {
+    background: #0056b3;
+  }
+  
+  .dashboard ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+  
+  .dashboard li {
+    background: #f8f9fa;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.2s;
+  }
+  
+  .dashboard li:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+  }
+  .dashboard{
+    overflow-y: auto;
+  }
+  .top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centers greeting */
+    align-items: center;
+    position: relative;
+    padding: 10px 20px;
+    margin-top: 20px; /* Add vertical gap from top */
+    background-color: none;
+    border: none
+  }
+  
+  .greeting {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .top-right-controls {
+    position: absolute;
+    right: 60px; /* Increased from 20px for better visibility */
+    display: flex;
+    align-items: center;
+    gap: 20px; /* More spacing between logout and avatar */
+  }
+  
+  .logout-button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 4px;
+  }
+  
+  .logout-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .avatar-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+  }
+  
