@@ -9,6 +9,8 @@ import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
 import { MatDialog } from '@angular/material/dialog';
 import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
+import { DocumentService } from '../../services/document.service';
+import e from 'express';
 
 @Component({
   selector: 'app-document-grid',
@@ -17,10 +19,11 @@ import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
   styleUrls: ['./document-grid.component.css']
 })
 export class DocumentGridComponent {
+
+ 
   
   @Input() documents: DocumentModel[] = [];
 
-  filteredDocuments: any[] = []; // Store filtered documents
   selectedFilter: string = 'owned'; // Default filter
   thumbnailMap: { [docId: string]: string } = {};
 
@@ -46,7 +49,7 @@ errorMessage: any;
 
     this.menuOpenMap[id]=false; // Close menu before opening dialog
     const dialogRef = this.dialog.open(ShareDialogComponent, {
-      width: '500px',
+      width: '600px',
       data: { docId: id, ownerId :this.ownerId },
     });
 
@@ -56,6 +59,25 @@ errorMessage: any;
       }
     });
 
+  }
+  deleteDoc(docId: string, event: Event) {
+    event.stopPropagation();
+    this.loading = true; // Show spinner
+  
+    this.documentService.deleteDoc(docId).subscribe({
+      next: (result) => {
+        if (result) {
+          this.toggleMenu(event,docId);
+          this.documents = this.documents.filter(doc => doc.id !== docId);
+        }
+        this.loading = false; // Hide spinner on success
+      },
+      error: (error) => {
+        alert("Some error occured while deleting this Document");
+        console.error('Delete failed', error);
+        this.loading = false; // Hide spinner on failure too
+      }
+    });
   }
   menuOpenMap: { [key: string]: boolean } = {}; // Track state per doc
 
@@ -78,7 +100,7 @@ errorMessage: any;
   private username = 'admin'; // Replace with actual username
   private password = 'admin'; // Replace with actual password
   ownerId :string  | null = null;
-  constructor(private http: HttpClient,private router:Router,private authService: AuthService,private dialog: MatDialog) {}
+  constructor(private http: HttpClient,private router:Router,private authService: AuthService,private dialog: MatDialog, private documentService: DocumentService) {}
   ngOnInit(): void {
     
     this.authService.getCurrentUserUID().subscribe((uid) => {
@@ -189,7 +211,6 @@ errorMessage: any;
       );
   }
   opendoc( doc:DocumentModel){ 
-    
     this.router.navigate(['/editor', doc.id]);
   }
   // openShareDialog() {

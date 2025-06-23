@@ -7,8 +7,7 @@ import { PermissionsComponent } from './components/permissions/permissions.compo
 import { CloudStorageComponent } from './components/cloud/cloud.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'register', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'editor/:id', component: EditorComponent },

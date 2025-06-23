@@ -1,5 +1,5 @@
+<div class="document-grid-container">
 <div class="container" >
-    <h2>Start a new document</h2>
     <div class="templates">
       <div class="template-card blank" (click)="createNewDoc()">
         <div class="blank-icon">+</div>
@@ -33,7 +33,7 @@
         <img [src]="thumbnailMap[doc.id] || '/assets/google-icon.png'" alt="Document Thumbnail">
         <div class="doc-info">
         <h3>{{ doc.title }}</h3>
-        <p>Last Opened: {{ doc.lastModified }}</p>
+        <p>Last Opened:<br>{{ doc.lastModified }}</p>
         </div>
         <div *ngIf ="selectedFilter == 'owned'" class="menu-container">
             <button class="menu-button" (click)="toggleMenu($event, doc.id)">
@@ -41,10 +41,11 @@
             </button>
             <ul class="menu-options" *ngIf="menuOpenMap[doc.id]">
                 <li (click)="openShareDialog(doc.id, $event)">Share</li>
+                <li (click)="deleteDoc(doc.id,$event)">Delete</li>
             </ul>
         </div>
     </div>
 </div>
-  
-<p *ngIf="loading">Loading more documents...</p>
-<p *ngIf="allLoaded">No more documents to load.</p>
+</div>  
+<!-- <p *ngIf="loading">Loading more documents...</p>
+<p *ngIf="allLoaded">No more documents to load.</p> -->
