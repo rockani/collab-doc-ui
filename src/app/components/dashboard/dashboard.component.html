@@ -10,7 +10,7 @@
 </div> -->
 <div class="top-bar">
   <div class="greeting">
-    <h2 *ngIf="userName">Welcome, {{ userName }}!</h2>
+    <h2 *ngIf="userName" [class.typing]="showCursor" [class.typed]="!showCursor">Welcome, {{ userName }}!</h2>
   </div>
   <div class="top-right-controls">
     <button class="logout-button" (click)="logout()">Logout</button>
@@ -19,7 +19,4 @@
     </div>
   </div>
 </div>
-
-
-
 <app-document-grid [documents]="documents"></app-document-grid>

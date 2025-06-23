@@ -92,7 +92,29 @@
             ],
             "scripts": []
           }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "collab-doc-editor:build",
+            "serverTarget": "collab-doc-editor:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "collab-doc-editor:build:production",
+              "serverTarget": "collab-doc-editor:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "collab-doc-ui:build:production",
+            "serverTarget": "collab-doc-ui:server:production",
+            "routes": [ "/" ]
+          }
         }
+
       }
     }
   }

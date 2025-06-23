@@ -18,16 +18,16 @@ getDocumentContent(id: string): Observable<any> {
     return this.http.get<string>(`http://localhost:8080/documents/content`, { params: { id } });
 }
 
-  updateDocument(id: string, content: string): Observable<any> {
-    return this.http.put(`/api/documents/${id}`, { content });
-  }
+  // updateDocument(id: string, content: string): Observable<any> {
+  //   return this.http.put(`/api/documents/${id}`, { content });
+  // }
 
   getCachedContent(id: string): Array<string> | undefined {
     return this.cachedDocuments.get(id);
   }
 
-  setCachedContent(id: string, content: string) {
+  setCachedContent(id: string, title:string, content: string) {
      
-    this.cachedDocuments.set(id,new Array(id, content) );
+    this.cachedDocuments.set(id,new Array(id, title, content) );
   }
 }

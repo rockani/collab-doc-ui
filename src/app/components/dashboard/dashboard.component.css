@@ -61,7 +61,7 @@
     justify-content: center; /* Centers greeting */
     align-items: center;
     position: relative;
-    padding: 10px 20px;
+    padding: 25px 20px;
     margin-top: 20px; /* Add vertical gap from top */
     background-color: none;
     border: none
@@ -107,4 +107,44 @@
     align-items: center;
     font-size: 16px;
   }
+  h2 {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #2c3e50;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #007bff;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #007bff; /* cursor effect */
+  width: 0;
+  /* animation: typing 2.5s steps(40, end) forwards, blink 0.75s step-end infinite; */
+  animation:
+    typing 2.5s steps(30, end) forwards,
+    blink 0.75s step-end infinite;
+  animation-delay: 0s, 2.5s;
+  animation-duration: 2.5s, 2s;
+  animation-fill-mode: forwards;
+    
+  }
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
   
+  @keyframes blink {
+    50% { border-color: transparent }
+  }
+
+  .typing {
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #007bff;
+    width: 0;
+    animation: typing 2.5s steps(30, end) forwards, blink 0.75s step-end infinite;
+  }
+  
+  .typed {
+    animation: none;
+    border-right: none;
+    width: auto;
+  }

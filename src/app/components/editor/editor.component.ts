@@ -30,6 +30,7 @@ export class EditorComponent implements OnInit{
   ownerId: string = '';
   newdoc: any;
   cursorPosition = 0;
+  loading = false;
   public currentlyViewingUsers:{ userId: string; userName: any; }[] = [];
   private bgColors: string[] = [
     '#F44336', '#E91E63', '#9C27B0', '#3F51B5',
@@ -98,6 +99,7 @@ export class EditorComponent implements OnInit{
     this.documentService.updateDocument(this.title, this.content,this.docId)
       .subscribe(response => {
         alert("Document updated successfully! ID: " + response.id);
+        this.dataService.setCachedContent(this.docId, this.title,this.content);
       }, error => {
         console.error("Error saving document:", error);
         alert("Failed to save document.");
@@ -107,20 +109,25 @@ export class EditorComponent implements OnInit{
   async ngOnInit() {
     
     this.docId = this.route.snapshot.paramMap.get('id')!;
+
     this.authService.getCurrentUserUID().subscribe((uid) => {
           if (uid) {
             this.ownerId = uid;
           }
     });
     const cachedData : Array<string> | undefined= this.dataService.getCachedContent(this.docId);
+    this.loading = true;
     if (cachedData) {
-      this.content = cachedData[1];
-      this.title = cachedData[0];
+      this.content = cachedData[2];
+      this.title = cachedData[1];
+      this.loading = false;
     } else {
       this.dataService.getDocumentContent(this.docId).subscribe((data) => {
+        this.loading = false;
         this.content = data.content;
         this.title = data.title;
-        this.dataService.setCachedContent(this.docId, this.content);
+        this.dataService.setCachedContent(this.docId, this.title,this.content);
+        
       });
     }
 
@@ -152,13 +159,9 @@ export class EditorComponent implements OnInit{
           //   this.bgColor = this.getRandomColor();
           // }
         });
-
-        
-
-
       }
     });
-
+    this.documentService.update_last_modified_time(this.docId).subscribe();
   }
   get avatarUrl(): string {
     const name = encodeURIComponent(this.userName);

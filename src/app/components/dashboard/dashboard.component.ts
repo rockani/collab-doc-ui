@@ -36,13 +36,16 @@ export class DashboardComponent {
   allLoaded = false;
   userName:string= '';
   userPhotoURL: string | null = null;
-
+  showCursor:boolean = true;
   private bgColors: string[] = [
     '#F44336', '#E91E63', '#9C27B0', '#3F51B5',
     '#03A9F4', '#009688', '#4CAF50', '#FF9800',
     '#795548', '#607D8B'
   ];
   ngOnInit() {
+    setTimeout(() => {
+      this.showCursor = false;
+    }, 8000);
     const auth = getAuth();
     //this.userName = user.displayName;
     onAuthStateChanged(auth, (user) => {

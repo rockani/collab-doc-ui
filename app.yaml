@@ -1,0 +1,7 @@
+runtime: nodejs20
+instance_class: F1
+entrypoint: node dist/collab-doc-editor/server/server.mjs
+
+handlers:
+  - url: /.*
+    script: auto
