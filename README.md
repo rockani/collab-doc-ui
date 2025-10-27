@@ -20,13 +20,29 @@ A real-time collaborative text editor built using **Angular**, **Spring Boot**, 
 
 ---
 
-## 🛠️ Tech Stack
+## 🧩 Tech Stack
 
-**Frontend:** Angular  
-**Backend:** Spring Boot  
-**Editor:** Quill.js  
-**Realtime:** WebSockets, Supabase  
-**Other:** OT (Operational Transformation), JWT (if used), PostgreSQL (if used)
+### **Frontend**
+- **Framework:** Angular (SSR)
+- **Realtime Transport:** Ably Realtime (WebSockets)
+- **State Management:** RxJS + Custom OT Handler
+- **UI:** TailwindCSS + Angular Material
+- **Auth:** Firebase Authentication
+- **Presence Tracking:** Supabase Realtime
+
+### **Backend**
+- **Framework:** Spring Boot (Java)
+- **Collaboration Engine:** Operational Transformation (OTProcessor)
+- **Messaging:** Ably Realtime (for broadcasting edits)
+- **Inter-Service Communication:** Apache Kafka
+- **Database:** MongoDB Atlas (for documents, metadata, and versions)
+- **Auth Integration:** Firebase Auth
+- **Presence & Collaboration Data:** Supabase Realtime
+
+### **Microservices**
+- **Thumbnail Service:** Node.js + Puppeteer  
+  - Consumes Kafka events to generate document thumbnails  
+  - Stores rendered thumbnails in Google Cloud Storage (GCS)
 
 ---
 
@@ -48,3 +64,37 @@ npm install
 
 # Start the frontend server
 npm start
+```
+---
+
+## 🏗️ Architecture Overview
+
+```mermaid
+graph TD
+  subgraph Client
+    FE[Angular Editor UI]
+    WS[ WebSocket Client]
+  end
+
+  subgraph Backend
+    BE[Spring Boot Backend]
+    OT[OT Processor]
+    DB[Database]
+  end
+
+  subgraph Cloud
+    AB[Ably Realtime Service]
+  end
+
+  FE -->|User edits| WS
+  WS -->|Publish operation| AB
+  AB -->|Forward operation| BE
+  BE -->|Transform & persist| OT
+  OT -->|Save updated doc| DB
+  OT -->|Send transformed op| BE
+  BE -->|Broadcast to clients| AB
+  AB -->|Send update| WS
+  WS -->|Apply update| FE
+```
+ 
+```
