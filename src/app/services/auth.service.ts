@@ -3,10 +3,13 @@ import { Auth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPasswo
 import { Router } from '@angular/router';
 import { AuthModule } from '@angular/fire/auth';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  firestore = inject(Firestore);
   router = inject(Router);
   auth =  inject(Auth);
   user$: Observable<User | null> | undefined;
@@ -93,7 +96,7 @@ export class AuthService {
 
   async logout() {
     await this.auth.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/register']);
   }
   checkVerification(user: any) {
     return setInterval(async () => {
@@ -120,5 +123,20 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
       
   }
-
+  async getUsernameFromUID(uid: string): Promise<string | null> {
+    try {
+      const userDocRef = doc(this.firestore, `users/${uid}`);
+      const userSnap = await getDoc(userDocRef);
+      if (userSnap.exists()) {
+        const data = userSnap.data() as { displayName?: string };
+        return data.displayName || null;
+      } else {
+        console.warn(`No user found with UID: ${uid}`);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching username:", error);
+      return null;
+    }
+  }
 }

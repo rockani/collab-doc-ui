@@ -1,5 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth"; // Import the auth module specifically
+import { getAuth } from "firebase/auth";
+ // Import the auth module specifically
+import { getDatabase } from 'firebase/database';
+
 const firebaseConfig =  {
         apiKey: "AIzaSyCz0nVLQoiklkIpMnLOJaBQE-HIu2bHUy0",
         authDomain: "collab-doc-editor-8323d.firebaseapp.com",
@@ -11,5 +14,6 @@ const firebaseConfig =  {
 };
 
   
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app); // Export the initialized Auth instance
+export const db = getDatabase(app);
