@@ -44,28 +44,7 @@ A real-time collaborative text editor built using **Angular**, **Spring Boot**, 
   - Consumes Kafka events to generate document thumbnails  
   - Stores rendered thumbnails in Google Cloud Storage (GCS)
 
----
 
-## 📦 Setup Instructions
-
-### Prerequisites
-- Node.js v18 or higher
-- Git
-
-### Steps to Run Locally
-
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd collab-doc-editor
-
-# Install dependencies
-npm install
-
-# Start the frontend server
-npm start
-```
----
 
 ## 🏗️ Architecture Overview
 
@@ -98,3 +77,25 @@ graph TD
 ```
  
 ```
+---
+
+## 📦 Setup Instructions
+
+### Prerequisites
+- Node.js v18 or higher
+- Git
+
+### Steps to Run Locally
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd collab-doc-editor
+
+# Install dependencies
+npm install
+
+# Start the frontend server
+npm start
+```
+---
