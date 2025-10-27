@@ -8,5 +8,5 @@ import { CommonModule } from '@angular/common';
   templateUrl: './cloud.component.html',
   styleUrls: ['./cloud.component.css']
 })
-export class CloudStorageComponent {}
+export class CloudComponent {}
 

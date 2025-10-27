@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
 import { DocumentService } from '../../services/document.service';
 import e from 'express';
-
+import { PLATFORM_ID, Inject } from '@angular/core';
 @Component({
   selector: 'app-document-grid',
   imports: [CommonModule,FormsModule],
@@ -100,7 +100,7 @@ errorMessage: any;
   private username = 'admin'; // Replace with actual username
   private password = 'admin'; // Replace with actual password
   ownerId :string  | null = null;
-  constructor(private http: HttpClient,private router:Router,private authService: AuthService,private dialog: MatDialog, private documentService: DocumentService) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private http: HttpClient,private router:Router,private authService: AuthService,private dialog: MatDialog, private documentService: DocumentService) {}
   ngOnInit(): void {
     
     this.authService.getCurrentUserUID().subscribe((uid) => {
@@ -113,15 +113,17 @@ errorMessage: any;
   }
   @HostListener('window:scroll', ['$event'])
   onScroll(): void {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100 && !this.loading && !this.allLoaded) {
-      console.log("scrolled");
-      if(this.selectedFilter=="owned"){
-        this.loadMore();
+    
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100 && !this.loading && !this.allLoaded) {
+        console.log("scrolled");
+        if(this.selectedFilter=="owned"){
+          this.loadMore();
+        }
+        else{
+          this.loadMoreSharedDocs();
+        }
       }
-      else{
-        this.loadMoreSharedDocs();
-      }
-    }
+   
   }
 
   loadMore(): void {
@@ -154,7 +156,7 @@ errorMessage: any;
                 }, error => {
                   console.error(`Error fetching thumbnail for doc ${docId}`, error);
                   // Optional: Set a default image fallback
-                  this.thumbnailMap[docId] = '/assets/default-thumbnail.png';
+                  this.thumbnailMap[docId] = '/assets/' + doc.id + '.png';
                 });
             }
             this.page++;

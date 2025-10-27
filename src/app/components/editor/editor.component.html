@@ -1,11 +1,4 @@
-<!-- <div class="editor-container">
-    <app-toolbar></app-toolbar>
-    <div class="editor" contenteditable="true"></div>
-    
-    <app-chat></app-chat>
-  </div> -->
-  
-  <div class="avatar-bar">
+<!-- <div class="avatar-bar">
 
     <div
       class="avatar"
@@ -17,16 +10,7 @@
       {{ getInitials(user.userName) }}
     </div>
   </div>
-  
-  <!-- <div class="presence-bar">
-    <p *ngIf="currentlyViewingUsers.length > 0">
-      Currently Viewing:
-      <span *ngFor="let user of currentlyViewingUsers; let last = last">
-        {{ user.userName }}<span *ngIf="!last">, </span>
-      </span>
-    </p>
-  </div> -->
-<div class="editor-container">
+  <div class="editor-wrapper">
     <input type="text" [(ngModel)]="title" placeholder="Enter document title" class="title-input" />
 
     <quill-editor [styles]="{ direction: 'ltr', textAlign: 'left' }"  [(ngModel)]="content" (onEditorCreated)="onEditorCreated($event)"></quill-editor>
@@ -37,4 +21,105 @@
     <div *ngIf="loading" class="spinner-overlay">
       <div class="spinner"></div>
     </div>
+    
+    <div class="cursor-overlay" #cursorOverlay></div>
+  </div> -->
+  
+ <!-- <div class="editor-container">
+    <input type="text" [(ngModel)]="title" placeholder="Enter document title" class="title-input" />
+
+    <quill-editor [styles]="{ direction: 'ltr', textAlign: 'left' }"  [(ngModel)]="content" (onEditorCreated)="onEditorCreated($event)"></quill-editor>
+    <div class="button-group">
+      <button (click)="updateDocument()" class="save-btn">Update</button>
+      <button (click)="saveDocument()" class="save-btn">Save as a new copy</button>
+    </div>
+    <div *ngIf="loading" class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
+</div>  -->
+
+
+<div class="editor-container" #editorContainer>
+  <!-- Top avatar bar for users currently viewing -->
+  <div class="avatar-bar">
+    <div
+      class="avatar"
+      *ngFor="let user of currentlyViewingUsers; let i = index"
+      [style.zIndex]="currentlyViewingUsers.length - i"
+      [style.background]="getColor(user.userId)"
+      [title]="user.userName"
+    >
+      {{ getInitials(user.userName) }}
+    </div>
+  </div>
+  <!-- <div class="avatar-bar">
+    <div
+      class="avatar"
+      *ngFor="let user of currentlyViewingUsers; let i = index"
+      [style.zIndex]="currentlyViewingUsers.length - i"
+      [title]="user.userName"
+    >
+      <img
+        [src]="'/assets/avatars/' + user.userId + '.png'"
+        [alt]="user.userName + ' avatar'"
+      />
+    </div>
+  </div> -->
+  
+  <!-- Document title -->
+  <input
+    type="text"
+    [(ngModel)]="title"
+    placeholder="Enter document title"
+    class="title-input"
+  />
+
+  <!-- Quill editor -->
+  <div class="editor-wrapper">
+    <quill-editor
+      [(ngModel)]="content"
+      (onEditorCreated)="onEditorCreated($event)"
+      
+      (mouseup)="onCursorMove($event)"
+      [styles]="{ direction: 'ltr', textAlign: 'left' }"
+    ></quill-editor>
+
+    
+    <!-- Floating cursors (avatars) for other users -->
+    <div *ngFor="let cursor of liveCursorsofUsers">
+      <img
+    class="cursor-pointer"
+    [src]="'/assets/cursor.png'"
+    [style.left.px]="cursor.x"
+    [style.top.px]="cursor.y"
+    alt="cursor"
+  />
+    
+      <div
+        class="cursor-avatar"
+        [ngStyle]="{
+          top: cursor.y + 'px',
+          left: cursor.x + 'px',
+          background: getColor(cursor.userId)
+        }"
+        [title]="this.userName"
+      >
+        {{ getInitialsFromUserId(cursor.userId) }}
+      </div>
+    </div>
+    
+   
+  </div>
+
+  <!-- Buttons -->
+  <div class="button-group">
+    <button (click)="updateDocument()" class="save-btn">Update</button>
+    <button (click)="saveDocument()" class="save-btn">Save as a new copy</button>
+    <button (click)="logout()" class="logout-btn">Logout</button>
+  </div>
+
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
 </div>

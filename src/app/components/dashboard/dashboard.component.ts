@@ -7,7 +7,8 @@ import { PaginatedResponse } from '../../models/pagination.model';
 import { DocumentModel } from '../../models/document.model';
 import Quill from 'quill';
 import { AuthService } from '../../services/auth.service';
-import { getAuth, onAuthStateChanged,signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import {app, auth} from '../../../firebase';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,7 +47,7 @@ export class DashboardComponent {
     setTimeout(() => {
       this.showCursor = false;
     }, 8000);
-    const auth = getAuth();
+  
     //this.userName = user.displayName;
     onAuthStateChanged(auth, (user) => {
       if (user && user.displayName) {
@@ -84,7 +85,7 @@ export class DashboardComponent {
   }
 
   logout() {
-    const auth = getAuth();
+    
     signOut(auth)
       .then(() => {
         console.log('✅ User signed out');

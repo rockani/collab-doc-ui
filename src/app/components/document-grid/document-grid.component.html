@@ -2,17 +2,63 @@
 <div class="container" >
     <div class="templates">
       <div class="template-card blank" (click)="createNewDoc()">
-        <div class="blank-icon">+</div>
-        <p>Blank document</p>
+        <img src="/assets/Create_Doc.png" alt="Modern Writer Resume">
+        <div class="template-info">
+          Create<br><span>Blank Document</span>
+        </div>
       </div>
 
-      <div class="template-card">Resume<br><span>Modern Writer</span></div>
+      <!-- <div class="template-card">Resume<br><span>Modern Writer</span></div>
       <div class="template-card">Resume<br><span>Coral</span></div>
       <div class="template-card">Project proposal<br><span>Tropic</span></div>
       <div class="template-card">Resume<br><span>Serif</span></div>
       <div class="template-card">Resume<br><span>Spearmint</span></div>
-      <div class="template-card">Letter<br><span>Spearmint</span></div>
-    </div>
+      <div class="template-card">Letter<br><span>Spearmint</span></div> -->
+      
+        <div class="template-card">
+          <img src="/assets/Template-Resume Modern Writer.png" alt="Modern Writer Resume">
+          <div class="template-info">
+            Resume<br><span>Modern Writer</span>
+          </div>
+        </div>
+      
+        <div class="template-card">
+          <img src="/assets/Template-Resume Coral.png" alt="Coral Resume">
+          <div class="template-info">
+            Resume<br><span>Coral</span>
+          </div>
+        </div>
+      
+        <div class="template-card">
+          <img src="/assets/Template-Project Proposal Tropic.png" alt="Tropic Project Proposal">
+          <div class="template-info">
+            Project Proposal<br><span>Tropic</span>
+          </div>
+        </div>
+      
+        <div class="template-card">
+          <img src="/assets/Template - Resume Seriff.png" alt="Serif Resume">
+          <div class="template-info">
+            Resume<br><span>Serif</span>
+          </div>
+        </div>
+      
+        <div class="template-card">
+          <img src="/assets/Template-Resume Spearmint.png" alt="Spearmint Resume">
+          <div class="template-info">
+            Resume<br><span>Spearmint</span>
+          </div>
+        </div>
+      
+        <div class="template-card">
+          <img src="/assets/Template-Letter Spearmint.png" alt="Spearmint Letter">
+          <div class="template-info">
+            Letter<br><span>Spearmint</span>
+          </div>
+        </div>
+      </div>
+      
+    
 </div>
 
 <div class="filter-container">
@@ -30,7 +76,7 @@
 <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>  
 <div class="document-grid">
     <div class="document-card" *ngFor="let doc of documents" (click)="opendoc(doc)">
-        <img [src]="thumbnailMap[doc.id] || '/assets/google-icon.png'" alt="Document Thumbnail">
+        <img [src]="thumbnailMap[doc.id] || (doc?.id ? '/assets/' + doc.id + '.png' : '/assets/default.png')" alt="Document Thumbnail">
         <div class="doc-info">
         <h3>{{ doc.title }}</h3>
         <p>Last Opened:<br>{{ doc.lastModified }}</p>
