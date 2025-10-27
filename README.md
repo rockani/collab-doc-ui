@@ -7,7 +7,7 @@ A real-time collaborative text editor built using **Angular**, **Spring Boot**, 
 
 
 
-<img width="713" height="761" alt="Screenshot 2025-10-26 at 10 54 03 PM" src="https://github.com/user-attachments/assets/23eb2cbd-9f60-47ff-93b3-0a4dbb30a3be" />
+<img width="1470" height="956" alt="Screenshot 2025-10-26 at 10 54 03 PM" src="https://github.com/user-attachments/assets/23eb2cbd-9f60-47ff-93b3-0a4dbb30a3be" />
 
 ## 🚀 Features
 
