@@ -3,7 +3,7 @@
   padding: 1rem;
 }
 
-.avatar-bar {
+/* .avatar-bar {
   display: flex;
   align-items: center;
   margin-bottom: 0.75rem;
@@ -26,7 +26,7 @@
   text-transform: uppercase;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-}
+} */
 
 .title-input {
   width: 100%;
@@ -43,8 +43,8 @@
 
 .cursor-avatar {
   position: absolute;
-  width: 22px;
-  height: 22px;
+  width: 27px;
+  height: 27px;
   border-radius: 50%;
   color: white;
   font-size: 10px;
@@ -53,7 +53,7 @@
   justify-content: center;
   pointer-events: none;
   font-weight: bold;
-  transform: translate(-25%, -25%);
+  transform: translate(-40%, -30%);
   z-index: 100;
   transition: top 0.05s linear, left 0.05s linear;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
@@ -110,11 +110,7 @@
     transform: rotate(360deg);
   }
 }
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+
 /* .cursor-pointer {
   position: absolute; 
   width: 16px;
@@ -144,11 +140,53 @@
   position: absolute;
   width: 23px; /* adjust as needed */
   height: 23px;
-  transform: translate(-8px, -8px); /* aligns image tip with actual pointer position */
+  transform: translate(-12px, -12px); /* aligns image tip with actual pointer position */
   pointer-events: none;
   z-index: 11000;
   opacity: 0.95;
   transform: rotate(20deg);
-  margin-left: 12px;
+  margin-left: 14px;
 }
 
+.cursor-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ensures the image fills the circle nicely */
+  border-radius: 50%;
+  display: block;
+}
+
+.avatar-bar {
+  display: flex;
+  align-items: center;
+  gap: -8px; /* overlap effect */
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden; /* critical to clip the image */
+  border: 1.5px solid #fff; /* white border for separation */
+  flex-shrink: 0;
+}
+
+.avatar-img {
+  position: absolute; /* sits inside avatar container */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* maintain aspect ratio and fill circle */
+  border-radius: 50%;
+  z-index: 1; /* ensure it sits above background */
+  pointer-events: none;
+}

@@ -1,4 +1,4 @@
-import { Component, Type } from '@angular/core';
+import { Component, HostListener, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -9,6 +9,7 @@ import Quill from 'quill';
 import { AuthService } from '../../services/auth.service';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import {app, auth} from '../../../firebase';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,8 +21,78 @@ import {app, auth} from '../../../firebase';
 export class DashboardComponent {
   //documents = [{ id: 1, name: "Project Proposal" }, { id: 2, name: "Meeting Notes" }];
 
-  constructor(private router: Router,private http: HttpClient,private authService: AuthService) {}
+  constructor(private router: Router,private http: HttpClient,private authService: AuthService,private profileService: ProfileService) {
+    
+  }
+  toggleProfileMenu(event:Event) {
+    event.stopPropagation();
+    this.menuOpen = !this.menuOpen;
+  }
 
+  @HostListener('document:click')
+  closeMenu() {
+    this.menuOpen = false;
+  }
+
+  fetchProfilePicture() {
+    this.http.get<{contentType: string; signedUrl: string}>(`http://localhost:8080/api/users/${this.userId}/profile-image`)
+      .subscribe({
+        next: (res) => {
+          this.profileUrl = res['signedUrl']; // ✅ extract only the signed URL
+        },
+        error: (err) => {
+          console.error('Error fetching profile image:', err);
+        }
+      });
+  }
+
+  onFileSelected(event: Event) {
+    // const input = event.target as HTMLInputElement;
+    // const file = input.files?.[0];
+    // if (!file) return;
+  
+    // const formData = new FormData();
+    // formData.append('file', file);
+  
+    // this.http.post<{ objectName: string; signedUrl: string }>(
+    //   `http://localhost:8080/api/users/${this.userId}/profile-image`,
+    //   formData
+    // ).subscribe({
+    //   next: (res) => {
+    //     this.profileUrl = res.signedUrl;
+    //     this.menuOpen = false;
+    //     input.value = ''; // reset file input to allow reselecting same file
+    //   },
+    //   error: (err) => {
+    //     console.error('Upload failed:', err);
+    //     alert('Failed to upload profile picture. Please try again.');
+    //   }
+    // });
+    const input = event.target as HTMLInputElement;
+    const file  = input.files?.[0];
+    if(!file) return;
+    this.profileService.uploadProfileImage(this.userId, file).subscribe({
+      next: (res) => {
+        console.log('Upload success:', res);
+      },
+      error: (err) => {
+        console.error('Upload failed:', err);
+      }
+    });
+    
+  }
+  
+
+  deleteProfilePicture() {
+    this.http.delete(`http://localhost:8080/api/profile/${this.userId}/delete`)
+      .subscribe({
+        next: () => {
+          this.profileUrl = null;
+          this.menuOpen = false;
+        },
+        error: (err) => console.error('Delete failed', err)
+      });
+  }
   createNewDoc() {
      this.router.navigate(['/editor', Math.random()]); 
   }
@@ -43,6 +114,10 @@ export class DashboardComponent {
     '#03A9F4', '#009688', '#4CAF50', '#FF9800',
     '#795548', '#607D8B'
   ];
+  menuOpen = false;
+  profileUrl: string | null = null;
+
+  userId =''; // ideally fetched from auth
   ngOnInit() {
     setTimeout(() => {
       this.showCursor = false;
@@ -52,16 +127,28 @@ export class DashboardComponent {
     onAuthStateChanged(auth, (user) => {
       if (user && user.displayName) {
         this.userName = user.displayName;
+        
       } else if (user && user.email) {
         // fallback if displayName is not set
         this.userName = user.email.split('@')[0];
       } else {
         this.userName = '';
       }
+      if(user)
+        this.userId = user.uid;
       this.initials = this.getInitials(this.userName);
       this.bgColor = this.getRandomColor();
     });
-
+    this.authService.getCurrentUserUID().subscribe((uid) => {
+      if (uid) {
+       
+        this.userId = uid;
+        this.fetchProfilePicture();
+      } else {
+        console.log('No user logged in');
+      }
+    });
+    
   }
   get avatarUrl(): string {
     const name = encodeURIComponent(this.userName);

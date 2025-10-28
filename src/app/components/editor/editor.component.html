@@ -40,18 +40,31 @@
 
 
 <div class="editor-container" #editorContainer>
-  <!-- Top avatar bar for users currently viewing -->
   <div class="avatar-bar">
     <div
       class="avatar"
       *ngFor="let user of currentlyViewingUsers; let i = index"
       [style.zIndex]="currentlyViewingUsers.length - i"
-      [style.background]="getColor(user.userId)"
+      [ngStyle]="{
+        background: profileImageUrls[user.userId] ? 'transparent' : getColor(user.userId)
+      }"
       [title]="user.userName"
     >
-      {{ getInitials(user.userName) }}
+      <ng-container *ngIf="profileImageUrls[user.userId]; else initialsAvatar">
+        <img
+          [src]="profileImageUrls[user.userId]"
+          alt="{{ user.userName }}"
+          class="avatar-img"
+        />
+      </ng-container>
+      <ng-template #initialsAvatar>
+        {{ getInitials(user.userName) }}
+      </ng-template>
     </div>
   </div>
+
+  
+  
   <!-- <div class="avatar-bar">
     <div
       class="avatar"
@@ -87,29 +100,42 @@
     
     <!-- Floating cursors (avatars) for other users -->
     <div *ngFor="let cursor of liveCursorsofUsers">
+      <!-- Cursor pointer image -->
       <img
-    class="cursor-pointer"
-    [src]="'/assets/cursor.png'"
-    [style.left.px]="cursor.x"
-    [style.top.px]="cursor.y"
-    alt="cursor"
-  />
+        class="cursor-pointer"
+        src="/assets/cursor.png"
+        [ngStyle]="{
+          top: cursor.y + 'px',
+          left: cursor.x + 'px',
+          
+        }"
+        alt="cursor"
+      />
     
+      <!-- Avatar (profile pic or initials) -->
       <div
         class="cursor-avatar"
         [ngStyle]="{
           top: cursor.y + 'px',
           left: cursor.x + 'px',
-          background: getColor(cursor.userId)
+          background: profileImageUrls[cursor.userId] ? 'transparent' : getColor(cursor.userId)
         }"
-        [title]="this.userName"
+        [title]="this.userNameDict[cursor.userId]"
       >
-        {{ getInitialsFromUserId(cursor.userId) }}
+        <ng-container *ngIf="profileImageUrls[cursor.userId]; else initialsCursor">
+          <img
+            [src]="profileImageUrls[cursor.userId]"
+            alt="{{ this.userNameDict[cursor.userId] }}"
+            class="cursor-avatar-img"
+          />
+        </ng-container>
+    
+        <ng-template #initialsCursor>
+          {{ getInitialsFromUserId(cursor.userId) }}
+        </ng-template>
       </div>
     </div>
     
-   
-  </div>
 
   <!-- Buttons -->
   <div class="button-group">
@@ -122,4 +148,5 @@
   <div *ngIf="loading" class="spinner-overlay">
     <div class="spinner"></div>
   </div>
+</div>
 </div>

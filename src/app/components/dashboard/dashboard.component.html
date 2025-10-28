@@ -14,9 +14,30 @@
   </div>
   <div class="top-right-controls">
     <button class="logout-button" (click)="logout()">Logout</button>
-    <div class="avatar-container" [style.background]="bgColor">
+  
+  <div 
+  class="avatar-container" 
+  [ngStyle]="profileUrl ? {} : { background: bgColor }"
+  (click)="toggleProfileMenu($event)"
+  >
+    <img 
+      *ngIf="profileUrl; else initialsTemplate" 
+      [src]="profileUrl" 
+      alt="Avatar" 
+      class="avatar-img" 
+    />
+    <ng-template #initialsTemplate>
       <span>{{ initials }}</span>
+    </ng-template>
+  </div>
+
+  
+    <div class="profile-menu" *ngIf="menuOpen" (click)="$event.stopPropagation()">
+      <label for="fileInput" class="menu-item upload">Upload new picture</label>
+      <input id="fileInput" type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
+      <button class="menu-item delete" (click)="deleteProfilePicture()">Delete picture</button>
     </div>
   </div>
+  
 </div>
 <app-document-grid [documents]="documents"></app-document-grid>

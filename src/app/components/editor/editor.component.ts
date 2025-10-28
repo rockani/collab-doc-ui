@@ -16,6 +16,7 @@ import { getAuth, onAuthStateChanged ,signOut} from 'firebase/auth';
 import {app, auth} from '../../../firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { Subscription } from 'rxjs';
+import { ProfileService } from '../../services/profile.service';
 
 
 interface CursorUpdate {
@@ -54,7 +55,8 @@ throw new Error('Method not implemented.');
   newdoc: any;
   cursorPosition = 0;
   loading = false;
-  public currentlyViewingUsers:{ userId: string; userName: any; }[] = [];
+  public currentlyViewingUsers:{ userId: string; userName: any;}[] = [];
+  profileImageUrls: { [userId: string]: string | null } = {}; 
   private bgColors: string[] = [
     '#F44336', '#E91E63', '#9C27B0', '#3F51B5',
     '#03A9F4', '#009688', '#4CAF50', '#FF9800',
@@ -69,7 +71,7 @@ throw new Error('Method not implemented.');
   private cursorSubs?: Subscription;
   userName:string= '';
   
-  constructor(private documentService: DocumentService, private authService: AuthService,private route: ActivatedRoute,
+  constructor(private profileService: ProfileService, private documentService: DocumentService, private authService: AuthService,private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
     private wsService: WebSocketService,
@@ -82,10 +84,21 @@ throw new Error('Method not implemented.');
       //return this.authService.getUsernameFromUID(userId);
       return this.getInitials(this.userName);
     }
-  
   ngAfterViewInit() {
     this.quillMaker();
     
+  }
+  userNameDict= {};
+
+  private loadProfileImages(): void {
+    this.currentlyViewingUsers.forEach(user => {
+      if (!this.profileImageUrls[user.userId]) {
+       
+        this.profileService.fetchProfileUrl(user.userId).subscribe(res => {
+          this.profileImageUrls[user.userId] = res.signedUrl || null; // cache result
+        });
+      }
+    });
   }
   logout() {
     
@@ -136,7 +149,7 @@ throw new Error('Method not implemented.');
   }
 
    ngOnInit() {
-    
+   
     this.docId = this.route.snapshot.paramMap.get('id')!;
     //this.refreshInterval = setInterval(() => this.renderAllCursors(), 50);
 
@@ -192,11 +205,13 @@ throw new Error('Method not implemented.');
         const userId = user.uid;
         const userName = user.displayName || user.email?.split('@')[0] || 'Anonymous';
         this.userName = userName;
+        this.userNameDict[userId] = userName;
         // Track presence in Supabase
         await this.docPresenceService.joinDocumentRoom(this.docId, userId, userName);
 
         this.docPresenceService.users$.subscribe((users) => {
           this.currentlyViewingUsers = users;
+          this.loadProfileImages();
           // for(let {userId: string; userName: any; } userInfo of this.currentlyViewingUsers ){
           //   this.initials = this.getInitials(userInfo.userName);
           //   this.bgColor = this.getRandomColor();
@@ -377,7 +392,7 @@ throw new Error('Method not implemented.');
     });
 
     // Start the cursor render loop
-    this.renderLoop();
+    //this.renderLoop();
     // Listen to local cursor changes
     quill.on('selection-change', (range, oldRange, source) => {
       if (source === 'user' && range) {
